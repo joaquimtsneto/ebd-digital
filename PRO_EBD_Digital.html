@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Área PRO — EBD Digital</title>
+<meta name="description" content="Área restrita da EBD Digital para igrejas participantes, professores e alunos.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/pro.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/supabase-config.js"></script>
+<script src="assets/pro.js" defer></script>
+</head>
+<body class="pro-page">
+<div class="topbar"></div>
+
+<main class="pro-main">
+  <section class="pro-hero">
+    <span class="pro-eyebrow">EBD Digital PRO</span>
+    <h1>Área exclusiva das igrejas participantes</h1>
+    <p>Materiais completos para professores, pastores e alunos, organizados por revista e lição.</p>
+  </section>
+
+  <section class="pro-card" id="proLoginView">
+    <div id="proConfigNotice" class="pro-notice" hidden>
+      <div class="pro-notice-icon">⚙</div>
+      <h2>Área PRO em preparação</h2>
+      <p>A estrutura de autenticação já está preparada. O próximo passo é conectar este site ao projeto Supabase da EBD Digital.</p>
+    </div>
+
+    <form id="proLoginForm" hidden>
+      <div class="pro-card-head">
+        <span class="pro-lock">🔒</span>
+        <div>
+          <h2>Entrar na Área PRO</h2>
+          <p>Use a conta fornecida ou autorizada pela sua igreja.</p>
+        </div>
+      </div>
+      <label for="proEmail">Email</label>
+      <input id="proEmail" type="email" autocomplete="username" required placeholder="seu@email.com">
+      <label for="proPassword">Senha</label>
+      <input id="proPassword" type="password" autocomplete="current-password" required placeholder="Sua senha">
+      <button class="pro-primary" type="submit">Entrar</button>
+      <div id="proMessage" class="pro-message" aria-live="polite"></div>
+      <p class="pro-help">Ainda não tem acesso? Peça à sua igreja para entrar em contato conosco.</p>
+    </form>
+  </section>
+
+  <section class="pro-card pro-dashboard" id="proDashboardView" hidden>
+    <div class="pro-dashboard-head">
+      <div>
+        <span class="pro-eyebrow">Área PRO</span>
+        <h2>Bem-vindo, <span id="proUserName">Usuário</span></h2>
+      </div>
+      <button id="proLogout" class="pro-secondary" type="button">Sair</button>
+    </div>
+    <div class="pro-grid">
+      <div class="pro-info"><span>Igreja</span><strong id="proChurchName">—</strong></div>
+      <div class="pro-info"><span>Função</span><strong id="proUserRole">—</strong></div>
+      <div class="pro-info"><span>Acesso</span><strong id="proLicenseStatus" class="pro-status pending">—</strong></div>
+    </div>
+    <div class="pro-placeholder">
+      <h3>Biblioteca PRO</h3>
+      <p>A biblioteca de revistas, Guias do Professor, apresentações em PDF e Áudio-Lições será conectada aqui ao conteúdo protegido do Supabase.</p>
+    </div>
+  </section>
+
+  <section class="pro-info-public">
+    <h2>Como funciona o acesso?</h2>
+    <div class="pro-steps">
+      <div><b>1</b><span>A igreja participa da EBD Digital.</span></div>
+      <div><b>2</b><span>Cada usuário recebe sua própria conta.</span></div>
+      <div><b>3</b><span>O acesso depende da função e da licença da igreja.</span></div>
+    </div>
+    <p class="pro-contact">Sua igreja ainda não utiliza a EBD Digital? <a href="mailto:projetovoznodeserto@gmail.com">Entre em contato conosco.</a></p>
+  </section>
+</main>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

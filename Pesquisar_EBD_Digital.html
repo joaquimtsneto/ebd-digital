@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesquisar &mdash; EBD Digital</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="search-page-head">
+  <button class="icon-btn" id="ebdBackBtn" aria-label="Voltar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg></button>
+  <input type="text" id="ebdSearchInput" placeholder="Buscar revista, lição ou referência..." autocomplete="off" autofocus>
+</div>
+
+<div class="app-search-results" id="ebdSearchResults">
+  <div class="app-search-empty">Digite o nome de uma revista, lição ou referência bíblica.</div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+document.getElementById('ebdBackBtn').addEventListener('click', function () {
+  if (document.referrer && document.referrer.indexOf(location.host) !== -1) {
+    history.back();
+  } else {
+    location.href = 'index.html';
+  }
+});
+
+function renderResults(q, data) {
+  var results = document.getElementById('ebdSearchResults');
+  q = (q || '').trim();
+  if (!q) {
+    results.innerHTML = '<div class="app-search-empty">Digite o nome de uma revista, lição ou referência bíblica.</div>';
+    return;
+  }
+  var found = ebdRunSearch(q, data);
+  if (!found.revistas.length && !found.lessons.length) {
+    results.innerHTML = '<div class="app-search-empty">Nada encontrado para &ldquo;' + q + '&rdquo;.</div>';
+    return;
+  }
+  var bookSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>';
+  var chevSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>';
+  var html = '';
+  if (found.revistas.length) {
+    html += '<div class="sr-group">Revistas</div>';
+    found.revistas.forEach(function (r) {
+      html += '<a class="sr-item" href="' + r.href + '">' + bookSvg + '<div><div class="sr-title">' + r.title + '</div><small>Revista ' + r.num + '</small></div></a>';
+    });
+  }
+  if (found.lessons.length) {
+    html += '<div class="sr-group">Lições</div>';
+    found.lessons.slice(0, 40).forEach(function (m) {
+      html += '<a class="sr-item" href="' + m.l.href + '">' + chevSvg + '<div><div class="sr-title">' + m.l.title + '</div><small>Revista ' + m.num + ' &middot; Lição ' + m.l.n + (m.l.ref ? ' &middot; ' + m.l.ref : '') + '</small></div></a>';
+    });
+  }
+  results.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  var input = document.getElementById('ebdSearchInput');
+  ebdLoadSearchData(function (data) {
+    input.addEventListener('input', function (e) { renderResults(e.target.value, data); });
+  });
+});
+</script>
+</body>
+</html>
